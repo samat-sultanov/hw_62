@@ -16,3 +16,45 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.name} - {self.amount}'
+
+
+class Cart(models.Model):
+    product = models.ForeignKey('webapp.Product', on_delete=models.CASCADE,
+                                verbose_name='Товар', related_name='in_cart')
+    qty = models.PositiveIntegerField(verbose_name='Количество', default=1)
+
+    def __str__(self):
+        return f'{self.product.name} - {self.qty}'
+
+    def get_product_total(self):
+        return self.qty * self.product.price
+
+    @classmethod
+    def get_total(cls):
+        total = 0
+        for cart in cls.objects.all():
+            total += cart.get_product_total()
+        return total
+
+
+class Order(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Имя')
+    phone = models.CharField(max_length=30, verbose_name='Телефон')
+    address = models.CharField(max_length=100, verbose_name='Адрес')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
+    products = models.ManyToManyField('webapp.Product', related_name='orders', verbose_name='Товары',
+                                      through='webapp.OrderProduct', through_fields=['order', 'product'])
+
+    def __str__(self):
+        return f'{self.name} - {self.phone}'
+
+
+class OrderProduct(models.Model):
+    product = models.ForeignKey('webapp.Product', on_delete=models.CASCADE,
+                                verbose_name='Товар', related_name='order_products')
+    order = models.ForeignKey('webapp.Order', on_delete=models.CASCADE,
+                              verbose_name='Заказ', related_name='order_products')
+    qty = models.PositiveIntegerField(verbose_name='Количество')
+
+    def __str__(self):
+        return f'{self.product.name} - {self.order.name}'
