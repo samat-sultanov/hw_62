@@ -122,3 +122,5 @@ LOGIN_URL = 'accounts:login'
 
 LOGIN_REDIRECT_URL = 'webapp:index'
 LOGOUT_REDIRECT_URL = 'webapp:index'
+
+SESSION_ENGINE = 'webapp.session_backend'

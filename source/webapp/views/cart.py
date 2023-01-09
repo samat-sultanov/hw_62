@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView
+from django.contrib.sessions.models import Session
 
 from webapp.forms import CartForm, OrderForm
 from webapp.models import Cart, Product, Order, OrderProduct
@@ -12,6 +13,8 @@ class CartAddView(CreateView):
     form_class = CartForm
 
     def form_valid(self, form):
+        if not self.request.session.session_key:
+            self.request.session.save()
         product = get_object_or_404(Product, pk=self.kwargs.get("pk"))
         qty = form.cleaned_data.get("qty")
         if qty > product.amount:
@@ -23,6 +26,7 @@ class CartAddView(CreateView):
                 cart_product.qty = qty
             else:
                 cart_product.qty += qty
+            cart_product.user_session = Session.objects.get(session_key=self.request.session.session_key)
             cart_product.save()
         return HttpResponseRedirect(self.get_success_url())
 

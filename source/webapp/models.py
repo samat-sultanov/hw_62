@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.contrib.sessions.models import Session
+
 
 DEFAULT_CATEGORY = 'other'
 CATEGORY_CHOICES = ((DEFAULT_CATEGORY, 'разное'), ('food', 'еда'), ('drinks', 'напитки'), ('sweets', 'сладости'),)
@@ -22,6 +24,7 @@ class Cart(models.Model):
     product = models.ForeignKey('webapp.Product', on_delete=models.CASCADE,
                                 verbose_name='Товар', related_name='in_cart')
     qty = models.PositiveIntegerField(verbose_name='Количество', default=1)
+    user_session = models.ForeignKey(Session, on_delete=models.CASCADE, related_name='carts', blank=True, null=True)
 
     def __str__(self):
         return f'{self.product.name} - {self.qty}'
