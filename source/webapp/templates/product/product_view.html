@@ -3,8 +3,12 @@
 {% block title %}Details{% endblock %}
 
 {% block nav %}
-    <li class="nav-item"><a class="nav-link" href="{% url 'webapp:product_update' product.pk %}">Редактировать</a></li>
-    <li class="nav-item"><a class="nav-link" href="{% url 'webapp:product_delete' product.pk %}">Удалить</a></li>
+    {% if request.user.is_authenticated and perms.webapp.change_product %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'webapp:product_update' product.pk %}">Редактировать</a></li>
+    {% endif %}
+    {% if request.user.is_authenticated and perms.webapp.delete_product %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'webapp:product_delete' product.pk %}">Удалить</a></li>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
