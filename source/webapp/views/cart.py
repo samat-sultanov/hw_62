@@ -82,15 +82,23 @@ class OrderCreate(CreateView):
     success_url = reverse_lazy('webapp:index')
 
     def form_valid(self, form):
+        if self.request.user.is_authenticated:
+            form.instance.name = self.request.user.username
         order = form.save()
 
         products = []
         order_products = []
 
-        for item in Cart.objects.all():
-            order_products.append(OrderProduct(product=item.product, qty=item.qty, order=order))
-            item.product.amount -= item.qty
-            products.append(item.product)
+        if self.request.user.is_authenticated:
+            for item in Cart.objects.all():
+                order_products.append(OrderProduct(product=item.product, qty=item.qty, order=order, client=self.request.user))
+                item.product.amount -= item.qty
+                products.append(item.product)
+        else:
+            for item in Cart.objects.all():
+                order_products.append(OrderProduct(product=item.product, qty=item.qty, order=order))
+                item.product.amount -= item.qty
+                products.append(item.product)
 
         OrderProduct.objects.bulk_create(order_products)
         Product.objects.bulk_update(products, ("amount",))

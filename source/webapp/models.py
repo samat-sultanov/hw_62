@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 from django.contrib.sessions.models import Session
-
+from django.contrib.auth import get_user_model
 
 DEFAULT_CATEGORY = 'other'
 CATEGORY_CHOICES = ((DEFAULT_CATEGORY, 'разное'), ('food', 'еда'), ('drinks', 'напитки'), ('sweets', 'сладости'),)
@@ -58,6 +58,9 @@ class OrderProduct(models.Model):
     order = models.ForeignKey('webapp.Order', on_delete=models.CASCADE,
                               verbose_name='Заказ', related_name='order_products')
     qty = models.PositiveIntegerField(verbose_name='Количество')
+    client = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='orderproducts', blank=True,
+                               null=True,
+                               verbose_name="Клиент")
 
     def __str__(self):
         return f'{self.product.name} - {self.order.name}'

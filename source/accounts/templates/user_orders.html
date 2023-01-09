@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    User Orders
+{% endblock %}
+
+{% block content %}&nbsp;&nbsp;
+    <h3>Заказы пользователя: {{ user_obj.get_full_name|default:user_obj.username }}</h3>&nbsp;
+
+    {% for order in user_obj.orderproducts.all %}&nbsp;&nbsp;
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 style="display: inline-block;">{{ order.product.name }} ({{ order.qty }} шт.)</h5>
+                </div>
+            </div>
+        </div>
+    {% empty %}&nbsp;
+        <h5 style="display: inline-block;">У данного пользователя нету заказов на данный момент!</h5>
+    {% endfor %}
+{% endblock %}

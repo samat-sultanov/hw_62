@@ -35,6 +35,7 @@
                 {% if request.user.is_authenticated %}
                     <p class="ms-auto text-white d-inline-block my-0 py-auto" >Привет, {{ request.user.username }}</p>
                     <a class="btn btn-dark ms-2" href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">Выйти</a>
+                    <a class="btn btn-dark ms-3" href="{% url 'accounts:orders' request.user.pk %}">Ваши Заказы</a>
                 {% else %}
                     <a class="btn btn-dark ms-auto" href="{% url 'accounts:login' %}?next={% if request.GET.next  %}{{ request.GET.next }}{% else %}{{ request.get_full_path }}{% endif %}">Войти</a>
                     <a class="btn btn-dark ms-2" href="{% url 'accounts:create' %}?next={% if request.GET.next  %}{{ request.GET.next }}{% else %}{{ request.get_full_path }}{% endif %}">Регистрация</a>
