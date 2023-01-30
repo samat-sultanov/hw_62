@@ -89,11 +89,11 @@ class CartDeleteOneView(DeleteView):
         cart = self.object
         cart.qty -= 1
         if cart.qty < 1:
-            messages.warning(self.request, f"{self.get_object()} штук удалено из корзины")
+            messages.warning(self.request, f"{self.get_object().product.name} 1 штука удалена из корзины")
             cart.delete()
         else:
             cart.save()
-            messages.warning(self.request, f"{self.get_object()} штук удалено из корзины")
+            messages.warning(self.request, f"{self.get_object().product.name} 1 штука удалена из корзины")
         return HttpResponseRedirect(success_url)
 
 
