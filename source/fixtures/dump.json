@@ -1,262 +1,181 @@
 [
 {
     "model": "webapp.product",
-    "pk": 1,
+    "pk": 13,
     "fields": {
-        "name": "самсы",
-        "description": "национальная кухня -Кыргызстан",
+        "name": "беляши",
+        "description": "фаст-фуд",
         "category": "food",
         "amount": 0,
-        "price": "70.00"
-    }
-},
-{
-    "model": "webapp.product",
-    "pk": 2,
-    "fields": {
-        "name": "кола",
-        "description": "напиток с газом",
-        "category": "drinks",
-        "amount": 3,
         "price": "45.00"
     }
 },
 {
     "model": "webapp.product",
-    "pk": 3,
+    "pk": 14,
     "fields": {
-        "name": "Хот-дог",
-        "description": "фаст-фуд",
-        "category": "food",
-        "amount": 1,
+        "name": "Капуччино",
+        "description": "кофе - бодрящий напиток",
+        "category": "drinks",
+        "amount": 3,
         "price": "90.00"
     }
 },
 {
     "model": "webapp.product",
-    "pk": 5,
+    "pk": 15,
     "fields": {
-        "name": "баклава",
-        "description": "турецкая сладость",
+        "name": "Чизкейк",
+        "description": "сладости",
         "category": "sweets",
-        "amount": 0,
-        "price": "50.00"
-    }
-},
-{
-    "model": "webapp.product",
-    "pk": 7,
-    "fields": {
-        "name": "пирожки",
-        "description": "фаст-фуд",
-        "category": "food",
-        "amount": 0,
-        "price": "25.00"
-    }
-},
-{
-    "model": "webapp.product",
-    "pk": 8,
-    "fields": {
-        "name": "Фанта",
-        "description": "Напиток с газом",
-        "category": "drinks",
-        "amount": 1,
-        "price": "50.00"
-    }
-},
-{
-    "model": "webapp.product",
-    "pk": 9,
-    "fields": {
-        "name": "Чай",
-        "description": "Охлаждающий напиток",
-        "category": "drinks",
-        "amount": 3,
-        "price": "25.00"
-    }
-},
-{
-    "model": "webapp.product",
-    "pk": 10,
-    "fields": {
-        "name": "Шоро",
-        "description": "национальный напиток",
-        "category": "drinks",
-        "amount": 0,
-        "price": "45.00"
-    }
-},
-{
-    "model": "webapp.product",
-    "pk": 11,
-    "fields": {
-        "name": "книга",
-        "description": "канц-товары",
-        "category": "other",
-        "amount": 0,
-        "price": "500.00"
-    }
-},
-{
-    "model": "webapp.product",
-    "pk": 12,
-    "fields": {
-        "name": "Блокнот",
-        "description": "Блокнот для записей",
-        "category": "other",
-        "amount": 6,
+        "amount": 5,
         "price": "150.00"
     }
 },
 {
-    "model": "webapp.order",
-    "pk": 25,
+    "model": "webapp.product",
+    "pk": 16,
     "fields": {
-        "name": "",
-        "phone": "07777777",
-        "address": "тунгуч 34",
-        "created_at": "2023-01-09T21:54:19.869Z"
+        "name": "Мороженое",
+        "description": "сладости",
+        "category": "sweets",
+        "amount": 4,
+        "price": "50.00"
+    }
+},
+{
+    "model": "webapp.product",
+    "pk": 17,
+    "fields": {
+        "name": "Карандаш",
+        "description": "разное",
+        "category": "other",
+        "amount": 5,
+        "price": "30.00"
+    }
+},
+{
+    "model": "webapp.product",
+    "pk": 18,
+    "fields": {
+        "name": "Самса",
+        "description": "фаст-фуд",
+        "category": "food",
+        "amount": 10,
+        "price": "70.00"
+    }
+},
+{
+    "model": "webapp.product",
+    "pk": 19,
+    "fields": {
+        "name": "Шаурма",
+        "description": "фаст-фуд",
+        "category": "food",
+        "amount": 4,
+        "price": "180.00"
+    }
+},
+{
+    "model": "webapp.product",
+    "pk": 20,
+    "fields": {
+        "name": "Кола",
+        "description": "напиток",
+        "category": "drinks",
+        "amount": 8,
+        "price": "50.00"
+    }
+},
+{
+    "model": "webapp.product",
+    "pk": 21,
+    "fields": {
+        "name": "Хот-дог",
+        "description": "Быстрая еда - не жди, а кушай!",
+        "category": "food",
+        "amount": 5,
+        "price": "90.00"
     }
 },
 {
     "model": "webapp.order",
-    "pk": 26,
-    "fields": {
-        "name": "customer2",
-        "phone": "0888151515",
-        "address": "анкара 28/3",
-        "created_at": "2023-01-09T21:55:12.244Z"
-    }
-},
-{
-    "model": "webapp.order",
-    "pk": 27,
-    "fields": {
-        "name": "customer2",
-        "phone": "0555555666",
-        "address": "ankara 28/10",
-        "created_at": "2023-01-09T22:34:44.487Z"
-    }
-},
-{
-    "model": "webapp.order",
-    "pk": 28,
-    "fields": {
-        "name": "customer3",
-        "phone": "0558445577",
-        "address": "Тунгуч 39/14",
-        "created_at": "2023-01-09T22:47:13.984Z"
-    }
-},
-{
-    "model": "webapp.order",
-    "pk": 29,
+    "pk": 47,
     "fields": {
         "name": "customer1",
-        "phone": "0555555555",
-        "address": "Карпинка 128",
-        "created_at": "2023-01-09T22:53:29.996Z"
+        "phone": "07777777",
+        "address": "анкара 28/3",
+        "created_at": "2023-01-30T06:15:21.418Z",
+        "client": null
     }
 },
 {
     "model": "webapp.order",
-    "pk": 30,
+    "pk": 48,
+    "fields": {
+        "name": "customer2",
+        "phone": "0555555555",
+        "address": "Карпинка 128",
+        "created_at": "2023-01-30T06:18:07.429Z",
+        "client": null
+    }
+},
+{
+    "model": "webapp.order",
+    "pk": 49,
+    "fields": {
+        "name": "customer1",
+        "phone": "0555555666",
+        "address": "Асанбай 59",
+        "created_at": "2023-01-30T06:24:34.748Z",
+        "client": null
+    }
+},
+{
+    "model": "webapp.order",
+    "pk": 50,
     "fields": {
         "name": "",
-        "phone": "0(555)50-59-52",
-        "address": "Асанбай 59",
-        "created_at": "2023-01-09T22:54:42.312Z"
-    }
-},
-{
-    "model": "webapp.orderproduct",
-    "pk": 26,
-    "fields": {
-        "product": 2,
-        "order": 25,
-        "qty": 1,
+        "phone": "0555555666",
+        "address": "ankara 28/10",
+        "created_at": "2023-01-30T06:25:30.457Z",
         "client": null
     }
 },
 {
     "model": "webapp.orderproduct",
-    "pk": 27,
+    "pk": 19,
     "fields": {
-        "product": 3,
-        "order": 25,
-        "qty": 1,
-        "client": null
+        "product": 14,
+        "order": 47,
+        "qty": 1
     }
 },
 {
     "model": "webapp.orderproduct",
-    "pk": 28,
+    "pk": 20,
     "fields": {
-        "product": 3,
-        "order": 26,
-        "qty": 2,
-        "client": 3
+        "product": 20,
+        "order": 48,
+        "qty": 2
     }
 },
 {
     "model": "webapp.orderproduct",
-    "pk": 29,
+    "pk": 21,
     "fields": {
-        "product": 10,
-        "order": 26,
-        "qty": 1,
-        "client": 3
+        "product": 19,
+        "order": 49,
+        "qty": 1
     }
 },
 {
     "model": "webapp.orderproduct",
-    "pk": 30,
+    "pk": 22,
     "fields": {
-        "product": 3,
-        "order": 27,
-        "qty": 1,
-        "client": 3
-    }
-},
-{
-    "model": "webapp.orderproduct",
-    "pk": 31,
-    "fields": {
-        "product": 5,
-        "order": 27,
-        "qty": 1,
-        "client": 3
-    }
-},
-{
-    "model": "webapp.orderproduct",
-    "pk": 32,
-    "fields": {
-        "product": 3,
-        "order": 28,
-        "qty": 2,
-        "client": 4
-    }
-},
-{
-    "model": "webapp.orderproduct",
-    "pk": 33,
-    "fields": {
-        "product": 5,
-        "order": 29,
-        "qty": 3,
-        "client": 2
-    }
-},
-{
-    "model": "webapp.orderproduct",
-    "pk": 34,
-    "fields": {
-        "product": 12,
-        "order": 30,
-        "qty": 2,
-        "client": null
+        "product": 17,
+        "order": 50,
+        "qty": 5
     }
 }
 ]
