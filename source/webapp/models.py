@@ -47,6 +47,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     products = models.ManyToManyField('webapp.Product', related_name='orders', verbose_name='Товары',
                                       through='webapp.OrderProduct', through_fields=['order', 'product'])
+    client = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, blank=True, null=True, verbose_name="Клиент")
 
     def __str__(self):
         return f'{self.name} - {self.phone}'
@@ -54,13 +55,10 @@ class Order(models.Model):
 
 class OrderProduct(models.Model):
     product = models.ForeignKey('webapp.Product', on_delete=models.CASCADE,
-                                verbose_name='Товар', related_name='order_products')
+                                verbose_name='Товар', related_name='order_prods')
     order = models.ForeignKey('webapp.Order', on_delete=models.CASCADE,
                               verbose_name='Заказ', related_name='order_products')
     qty = models.PositiveIntegerField(verbose_name='Количество')
-    client = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='orderproducts', blank=True,
-                               null=True,
-                               verbose_name="Клиент")
 
     def __str__(self):
-        return f'{self.product.name} - {self.order.name}'
+        return f'{self.product.name}'

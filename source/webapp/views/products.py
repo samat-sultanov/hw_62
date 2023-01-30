@@ -10,13 +10,12 @@ from webapp.views.base_view import SearchView
 class IndexView(SearchView):
     model = Product
     template_name = 'product/index.html'
-    ordering = ['category', 'name']
     search_fields = ['name__icontains']
     paginate_by = 6
     context_object_name = 'products'
 
     def get_queryset(self):
-        return super().get_queryset().filter(amount__gt=0)
+        return super().get_queryset().filter(amount__gt=0).order_by('category', 'name')
 
 
 class ProductView(DetailView):

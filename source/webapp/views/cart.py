@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -17,17 +18,27 @@ class CartAddView(CreateView):
             self.request.session.save()
         product = get_object_or_404(Product, pk=self.kwargs.get("pk"))
         qty = form.cleaned_data.get("qty")
-        if qty > product.amount:
-            return HttpResponseBadRequest(
-                f"Количество товара {product.name} всего {product.amount}. Добавить {qty} штук не получится")
+
+        if Cart.objects.filter(product_id=product.pk):
+            cart_product_qty = 0
+            cart_product = Cart.objects.filter(product_id=product.pk)
+            for i in cart_product:
+                cart_product_qty += i.qty
         else:
-            cart_product, is_created = Cart.objects.get_or_create(product=product)
+            cart_product_qty = 0
+
+        if qty > product.amount or (qty + cart_product_qty) > product.amount:
+            messages.error(self.request, f"Количество товара {product.name} с вычетом товара в корзинах пользователя: {product.amount-cart_product_qty}. Добавить {qty} штук в корзину не получилось")
+        else:
+            cart_product, is_created = Cart.objects.get_or_create(product=product, user_session=Session.objects.get(
+                session_key=self.request.session.session_key))
             if is_created:
                 cart_product.qty = qty
             else:
                 cart_product.qty += qty
             cart_product.user_session = Session.objects.get(session_key=self.request.session.session_key)
             cart_product.save()
+            messages.success(self.request, f'{product.name}: {qty} штук добавлено в корзину')
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
@@ -43,10 +54,17 @@ class CartView(ListView):
     context_object_name = "cart"
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(object_list=None, **kwargs)
-        context['total'] = Cart.get_total()
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        cart = self.get_queryset()
         context['form'] = OrderForm()
+        context['total'] = 0
+        for product in cart:
+            context['total'] += product.get_product_total()
         return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user_session=self.request.session.session_key)
 
 
 class CartDeleteView(DeleteView):
@@ -54,6 +72,7 @@ class CartDeleteView(DeleteView):
     success_url = reverse_lazy('webapp:cart')
 
     def get(self, request, *args, **kwargs):
+        messages.warning(self.request, f"{self.get_object()} штук удалено из корзины")
         return self.delete(request, *args, **kwargs)
 
 
@@ -70,9 +89,11 @@ class CartDeleteOneView(DeleteView):
         cart = self.object
         cart.qty -= 1
         if cart.qty < 1:
+            messages.warning(self.request, f"{self.get_object()} штук удалено из корзины")
             cart.delete()
         else:
             cart.save()
+            messages.warning(self.request, f"{self.get_object()} штук удалено из корзины")
         return HttpResponseRedirect(success_url)
 
 
@@ -90,17 +111,17 @@ class OrderCreate(CreateView):
         order_products = []
 
         if self.request.user.is_authenticated:
-            for item in Cart.objects.all():
-                order_products.append(OrderProduct(product=item.product, qty=item.qty, order=order, client=self.request.user))
+            for item in Cart.objects.filter(user_session_id=self.request.session.session_key):
+                order_products.append(OrderProduct(product=item.product, qty=item.qty, order=order))
                 item.product.amount -= item.qty
                 products.append(item.product)
         else:
-            for item in Cart.objects.all():
+            for item in Cart.objects.filter(user_session_id=self.request.session.session_key):
                 order_products.append(OrderProduct(product=item.product, qty=item.qty, order=order))
                 item.product.amount -= item.qty
                 products.append(item.product)
 
         OrderProduct.objects.bulk_create(order_products)
         Product.objects.bulk_update(products, ("amount",))
-        Cart.objects.all().delete()
+        Cart.objects.filter(user_session_id=self.request.session.session_key).delete()
         return HttpResponseRedirect(self.success_url)
